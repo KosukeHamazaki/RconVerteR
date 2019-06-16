@@ -1,0 +1,3 @@
+exportPattern("^[[:alpha:]]+")
+import(readr)
+import(stringr)

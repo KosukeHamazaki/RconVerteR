@@ -86,38 +86,39 @@ Rmd2R <- function(fileName, outFormat = "unknown", Numbering = TRUE,
 
   }
 
-  subtitle.sharp.count <- str_count(sc0.vec[sc.kind == "subtitle"],
-                                    pattern = "#")
-  subtitle.sharp.count.unique <- sort(unique(subtitle.sharp.count))
-  subtitle.sharp.count.len <- length(subtitle.sharp.count)
+  if ("subtitle" %in% sc.kind) {
+    subtitle.sharp.count <- str_count(sc0.vec[sc.kind == "subtitle"],
+                                      pattern = "#")
+    subtitle.sharp.count.unique <- sort(unique(subtitle.sharp.count))
+    subtitle.sharp.count.len <- length(subtitle.sharp.count)
 
-  subtitle.number <- rep(NA, subtitle.sharp.count.len)
-  subtitle.subnumber <- rep(NA, subtitle.sharp.count.len)
-  subtitle.level <- rep(NA, subtitle.sharp.count.len)
-  for (i in 1:subtitle.sharp.count.len) {
-    subtitle.level[i] <-
-      match(subtitle.sharp.count[i], subtitle.sharp.count.unique)
+    subtitle.number <- rep(NA, subtitle.sharp.count.len)
+    subtitle.subnumber <- rep(NA, subtitle.sharp.count.len)
+    subtitle.level <- rep(NA, subtitle.sharp.count.len)
+    for (i in 1:subtitle.sharp.count.len) {
+      subtitle.level[i] <-
+        match(subtitle.sharp.count[i], subtitle.sharp.count.unique)
 
 
-    if (subtitle.level[i] == 1) {
-      subtitle.count.start <- 1
-    } else {
-      subtitle.count.start <-
-        max(which((subtitle.sharp.count <
-                     subtitle.sharp.count.unique[subtitle.level[i]])[1:i]))
-    }
-    subtitle.subnumber[i] <- sum((subtitle.sharp.count ==
-                                    subtitle.sharp.count.unique[subtitle.level[i]])
-                                 [subtitle.count.start:i])
+      if (subtitle.level[i] == 1) {
+        subtitle.count.start <- 1
+      } else {
+        subtitle.count.start <-
+          max(which((subtitle.sharp.count <
+                       subtitle.sharp.count.unique[subtitle.level[i]])[1:i]))
+      }
+      subtitle.subnumber[i] <- sum((subtitle.sharp.count ==
+                                      subtitle.sharp.count.unique[subtitle.level[i]])
+                                   [subtitle.count.start:i])
 
-    if (subtitle.level[i] == 1){
-      subtitle.number[i] <- paste0(subtitle.subnumber[i], ".")
-    } else {
-      subtitle.number[i] <- paste0(subtitle.number[subtitle.count.start],
-                                   subtitle.subnumber[i], ".")
+      if (subtitle.level[i] == 1){
+        subtitle.number[i] <- paste0(subtitle.subnumber[i], ".")
+      } else {
+        subtitle.number[i] <- paste0(subtitle.number[subtitle.count.start],
+                                     subtitle.subnumber[i], ".")
+      }
     }
   }
-
 
   sc.vec <- rep(NA, sc0.len)
 

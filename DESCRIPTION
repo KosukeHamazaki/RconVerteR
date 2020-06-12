@@ -1,7 +1,7 @@
 Package: RconVerteR
 Type: Package
 Title: Converte R file into Rmd file (and vice versa)
-Version: 0.1.0
+Version: 0.1.1
 Author: Kosuke Hamazaki
 Maintainer: Kosuke Hamazaki <hamazaki@ut-biomet.org>
 License: GPL-3
